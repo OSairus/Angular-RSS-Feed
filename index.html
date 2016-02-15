@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="TechAngularTest" ng-cloak>
+<!--CREATED BY JBEVANS - 14TH FEBRUARY, 2016-->
+<head>
+    <meta charset="UTF-8">
+    <title>Angular RSS Feed</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"/>
+    <script src="scripts/jsonp.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/services/rssFeedService.js"></script>
+    <script src="scripts/controllers/rssFeedController.js"></script>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-aria.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-messages.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+<div ng-controller="rssFeedController">
+    <div class="main">
+        <div class="left-side">
+            <div class="spacer">
+
+                <md-input-container>
+                    <label>Add Feed</label>
+                    <input ng-model="currentFeed.text" type="text">
+                </md-input-container>
+            </div>
+
+            <md-button ng-click="addFeed()" class="md-raised md-primary"><i class="zmdi zmdi-search"></i></md-button>
+        </div>
+        <div class="link-list">
+            <ul>
+                <li ng-repeat ="feed in getfeeds()">
+                    <md-button ng-click="selectFeed(feed)" class="md-raised {{getactivefeed(feed)}}">{{$index+1}}. {{feed}}</md-button>&nbsp;&nbsp;&nbsp;<md-button ng-click="removeFeed(feed)" class="md-icon-button" aria-label="More">
+                    <md-icon md-svg-icon="ic_close_black_24px.svg"></md-icon>
+                </md-button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="right-side">
+        <ul>
+            <li ng-repeat="feed in feedData">
+                <md-card>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">{{feed.title}}</span>
+                            <span class="rss-date">{{feed.publishedDate}}</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        <p ng-bind-html="translatecontent(feed.content)">
+
+                        </p>
+                    </md-card-content>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button ng-click="launchwindow(feed.link)">Launch</md-button>
+                    </md-card-actions>
+                </md-card>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
